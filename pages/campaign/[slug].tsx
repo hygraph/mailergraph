@@ -49,6 +49,7 @@ const Campaign: NextPage = ({ campaign }: any) => {
                         src={header.url}
                         width={header.width}
                         height={header.height}
+                        alt={header.url}
                     />
                 </Box>
                 <Box>

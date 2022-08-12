@@ -3,6 +3,7 @@ import { Button, FormControl, FormHelperText } from "@chakra-ui/react";
 import { useFormSidebarExtension, Wrapper } from "@graphcms/app-sdk-react";
 import type { NextPage } from "next";
 import { useState } from "react";
+import { config } from "../utils/config";
 
 function SubmitButton() {
     const { entry, showToast } = useFormSidebarExtension();
@@ -13,7 +14,7 @@ function SubmitButton() {
         const userConfirm = confirm("Are you sure?");
         if (!userConfirm) return;
         setIsLoading(true);
-        fetch("http://localhost:3001/api/sendEmail", {
+        fetch(`${config.API_URL}/api/sendEmail`, {
             method: "POST",
             body: JSON.stringify({
                 entryId: entry?.id,

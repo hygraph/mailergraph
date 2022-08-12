@@ -1,29 +1,27 @@
 import nodemailer from "nodemailer";
 import { buildSendMail } from "mailing-core";
+import { Options } from "nodemailer/lib/smtp-connection";
 
-// const transport = nodemailer.createTransport({
-//   pool: true,
-//   host: "smtp.example.com",
-//   port: 465,
-//   secure: true, // use TLS
-//   auth: {
-//     user: "username",
-//     pass: "password",
-//   },
-// });
+const host: string = process.env.EMAIL_HOST ?? "";
+const port: number = process.env.EMAIL_PORT as any;
+const user: string = process.env.EMAIL_USER ?? "";
+const pass: string = process.env.EMAIL_PASS ?? "";
+const defaultFrom: string = process.env.EMAIL_FROM ?? "noreply@example.com";
 
-const transport = nodemailer.createTransport({
-    host: "smtp.mailtrap.io",
-    port: 2525,
+const smtpOptions: Options = {
+    host,
+    port,
     auth: {
-        user: "e5c96eac647ec4",
-        pass: "6db5cdea47c29e",
+        user,
+        pass,
     },
-});
+};
+
+const transport = nodemailer.createTransport(smtpOptions);
 
 const sendMail = buildSendMail({
     transport,
-    defaultFrom: "no-reply@mailergraph.com",
+    defaultFrom,
 });
 
 export default sendMail;

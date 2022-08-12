@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useState } from "react";
+import { config } from "../utils/config";
 
 type formDataType = {
     email?: string;
@@ -29,7 +30,7 @@ function SubscribeForm() {
             email,
             firstName,
         };
-        fetch("http://localhost:3001/api/subscribe", {
+        fetch(`${config.API_URL}/api/subscribe`, {
             method: "POST",
             body: JSON.stringify(formData),
             headers: {
@@ -72,7 +73,7 @@ function SubscribeForm() {
                             onChange={(e: any) => setEmail(e.target.value)}
                         />
                         <FormHelperText>
-                            We'll never share your email.
+                            We will never share your email.
                         </FormHelperText>
                     </FormControl>
                     <FormControl>
