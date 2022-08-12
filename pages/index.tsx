@@ -39,6 +39,8 @@ export async function getServerSideProps(context: any) {
 }
 
 const Home: NextPage = ({ campaigns }: any) => {
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.LIVE_URL);
     return (
         <div className={styles.container}>
             <Head>

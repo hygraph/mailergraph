@@ -5,6 +5,8 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import { config } from "../utils/config";
 
+const apiUrl: string = config.API_URL;
+
 function SubmitButton() {
     const { entry, showToast } = useFormSidebarExtension();
     const [isLoading, setIsLoading] = useState(false);
@@ -14,7 +16,7 @@ function SubmitButton() {
         const userConfirm = confirm("Are you sure?");
         if (!userConfirm) return;
         setIsLoading(true);
-        fetch(`${config.API_URL}/api/sendEmail`, {
+        fetch(`${apiUrl}/api/sendEmail`, {
             method: "POST",
             body: JSON.stringify({
                 entryId: entry?.id,
