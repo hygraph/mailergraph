@@ -9,7 +9,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@chakra-ui/icons": "^2.0.6",
+    "@chakra-ui/react": "^2.2.6",
+    "@emotion/react": "^11",
+    "@emotion/styled": "^11",
     "@graphcms/app-sdk-react": "^0.0.5",
+    "framer-motion": "^6",
+    "graphql": "^16.5.0",
+    "graphql-request": "^4.3.0",
     "mailing-core": "^0.6.6",
     "mjml": "^4.13.0",
     "mjml-react": "^2.0.8",
