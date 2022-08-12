@@ -5,7 +5,10 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import { config } from "../utils/config";
 
-const apiUrl: string = config.API_URL as string;
+const apiUrl: string =
+    process.env.NODE_ENV !== "development"
+        ? "https://mailergraph-five.vercel.app"
+        : "http://localhost:3001";
 
 function SubmitButton() {
     const { entry, showToast } = useFormSidebarExtension();
