@@ -5,7 +5,7 @@ import type { NextPage } from "next";
 import { useState } from "react";
 import { config } from "../utils/config";
 
-const apiUrl: string = config.API_URL;
+const apiUrl: string = config.API_URL as string;
 
 function SubmitButton() {
     const { entry, showToast } = useFormSidebarExtension();
