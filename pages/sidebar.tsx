@@ -11,7 +11,11 @@ const apiUrl: string =
         : "http://localhost:3001";
 
 function SubmitButton() {
-    const { entry, showToast } = useFormSidebarExtension();
+    const {
+        entry,
+        installation: { config },
+        showToast,
+    } = useFormSidebarExtension();
     const [isLoading, setIsLoading] = useState(false);
     const [canSend, setCanSend] = useState(entry?.id ? false : true);
 
@@ -23,6 +27,7 @@ function SubmitButton() {
             method: "POST",
             body: JSON.stringify({
                 entryId: entry?.id,
+                config: config,
                 forceDeliver: true,
             }),
             headers: {

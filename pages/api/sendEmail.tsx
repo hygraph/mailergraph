@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import sendMail from "../../emails";
+import sendMail, { setConfig } from "../../emails";
 import { gql } from "graphql-request";
 import WelcomeDemo from "../../emails/WelcomeDemo";
 import { hygraph } from "../../utils/client";
@@ -54,7 +54,7 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<Data>
 ) {
-    const { entryId, forceDeliver } = req.body;
+    const { entryId, forceDeliver, config } = req.body;
 
     try {
         const { campaign } = await hygraph.request(getCampaignById, {
@@ -67,6 +67,7 @@ export default async function handler(
 
         const results: any[] = await Promise.all(
             subscribers.map(async (subscriber: any) => {
+                setConfig(config);
                 return await sendMail({
                     subject: subject,
                     to: subscriber.email,
@@ -78,27 +79,31 @@ export default async function handler(
                         />
                     ),
                     forceDeliver,
-                }).catch(() => {
-                    res.status(200).json({ isSent: false });
                 });
             })
         );
 
-        // console.log("results:", results);
-
         try {
-            await hygraph.request(updateCampaign, {
-                isSent: true,
-                id: entryId,
-            });
+            const token: string = process.env.HYGRAPH_API_TOKEN!;
+            const requestHeaders = {
+                authorization: `Bearer ${token}`,
+            };
+            await hygraph.request(
+                updateCampaign,
+                {
+                    isSent: true,
+                    id: entryId,
+                },
+                requestHeaders
+            );
 
             res.status(200).json({ isSent: true });
         } catch (error) {
             console.log(error);
-            res.status(200).json({ isSent: false });
+            res.status(400).json({ isSent: false });
         }
     } catch (error) {
         console.log(error);
-        res.status(200).json({ isSent: false });
+        res.status(400).json({ isSent: false });
     }
 }
