@@ -17,11 +17,11 @@ function Install() {
     const { config } = installation;
 
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [host, setHost] = useState(config.HOST || "");
-    const [port, setPort] = useState(config.PORT || "");
-    const [user, setUser] = useState(config.USER || "");
-    const [pass, setPass] = useState(config.PASS || "");
-    const [emailFrom, setEmailFrom] = useState(config.EMAIL_FROM || "");
+    const [host, setHost] = useState<any>(config.HOST || "");
+    const [port, setPort] = useState<any>(config.PORT || "");
+    const [user, setUser] = useState<any>(config.USER || "");
+    const [pass, setPass] = useState<any>(config.PASS || "");
+    const [emailFrom, setEmailFrom] = useState<any>(config.EMAIL_FROM || "");
 
     const isCompleted = installation.status === "COMPLETED";
 
